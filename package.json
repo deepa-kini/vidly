@@ -1,0 +1,23 @@
+{
+  "name": "vidly",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deepa-kini/vidly.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/deepa-kini/vidly/issues"
+  },
+  "homepage": "https://github.com/deepa-kini/vidly#readme",
+  "dependencies": {
+    "express": "^4.17.2",
+    "joi": "^17.6.0"
+  }
+}
