@@ -1,14 +1,23 @@
 const express = require('express');
+const helmet = require('helmet');
+const morgan = require('morgan');
 const logger = require('./logger');
 const auth = require('./auth');
 const Joi = require('joi');
 const port = process.env.PORT || 3000;
 const app = express();
 
+// Built-in Middleware functions
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
 
+// Third-party Middleware functions
+app.use(helmet());
+app.use(morgan('tiny'));
+
+// Custom Middleware functions
 app.use(logger);
-
 app.use(auth);
 
 const genres = [

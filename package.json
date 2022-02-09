@@ -18,6 +18,8 @@
   "homepage": "https://github.com/deepa-kini/vidly#readme",
   "dependencies": {
     "express": "^4.17.2",
-    "joi": "^17.6.0"
+    "helmet": "^5.0.2",
+    "joi": "^17.6.0",
+    "morgan": "^1.10.0"
   }
 }
