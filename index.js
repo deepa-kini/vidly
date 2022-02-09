@@ -1,3 +1,4 @@
+const config = require('config');
 const express = require('express');
 const helmet = require('helmet');
 const morgan = require('morgan');
@@ -23,6 +24,12 @@ app.use(helmet());
 if (app.get('env') === 'development') {
   app.use(morgan('tiny'));
 }
+
+
+// Configuration
+console.log('Application Name:', config.get('name'));
+console.log('Mail Server:', config.get('mail.host'));
+console.log('Mail Server Pwd:', config.get('mail.password'));
 
 // Custom Middleware functions
 app.use(logger);
