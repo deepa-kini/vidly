@@ -1,9 +1,15 @@
 const express = require('express');
-const port = process.env.PORT || 3000;
+const logger = require('./logger');
+const auth = require('./auth');
 const Joi = require('joi');
+const port = process.env.PORT || 3000;
 const app = express();
 
 app.use(express.json());
+
+app.use(logger);
+
+app.use(auth);
 
 const genres = [
   { id: 1, name: 'comedy' },
