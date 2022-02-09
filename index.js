@@ -7,6 +7,11 @@ const Joi = require('joi');
 const port = process.env.PORT || 3000;
 const app = express();
 
+/* Get to know the environment: Prod OR DEV or TEST
+console.log(`Node_ENV: ${process.env.NODE_ENV}`);
+console.log(`app: ${app.get('env')}`);
+*/
+
 // Built-in Middleware functions
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -14,7 +19,10 @@ app.use(express.static('public'));
 
 // Third-party Middleware functions
 app.use(helmet());
-app.use(morgan('tiny'));
+
+if (app.get('env') === 'development') {
+  app.use(morgan('tiny'));
+}
 
 // Custom Middleware functions
 app.use(logger);
