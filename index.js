@@ -6,6 +6,7 @@ const config = require('config');
 const logger = require('./middleware/logger');
 const auth = require('./middleware/auth');
 const genres = require('./routes/genres');
+const customers = require('./routes/customers');
 const homepage = require('./routes/homepage');
 
 const port = process.env.PORT || 3000;
@@ -38,6 +39,7 @@ app.use(auth);
 
 // Establish the routes
 app.use('/api/genres', genres);
+app.use('/api/customers', customers);
 app.use('/', homepage);
 
 
