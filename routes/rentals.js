@@ -2,14 +2,9 @@ const express = require('express');
 const { validate, Rental } = require('../models/rental');
 const { Customer } = require('../models/customer');
 const { Movie } = require('../models/movie');
-const config = require('config');
-const Fawn = require('fawn');
 
-const password = config.get('database.password');
-const dbConnect = `mongodb://root:${password}@playground.mryia.mongodb.net/vidly?retryWrites=true&w=majority`;
-
-Fawn.init(dbConnect);
 const Router = express.Router();
+
 
 Router.get('/', async (req, res) => {
   const rentals = await Movie.find().sort('-dateOut');
@@ -36,25 +31,18 @@ Router.post('/', async (req, res) => {
     },
     movie: {
       _id: movie._id,
-      title: movie.name,
+      title: movie.title,
       dailyRentalRate: movie.dailyRentalRate
     },
   })
 
-  try {
-    // working with collection directly
-    // Case-sensitive
-    await new Fawn.Task()
-      .save('rentals', rental)
-      .update('movies', { _id: movie._id }, {
-        $inc: { numberInStock: -1 }
-      })
-      .run();
+  rental = await rental.save();
 
-    res.send(rental);
-  } catch (ex) {
-    res.status(500).send('something failed');
-  }
+  movie.numberInStock--;
+  movie.save();
+
+  res.send(rental);
+
 });
 
 module.exports = Router;
