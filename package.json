@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/deepa-kini/vidly#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "config": "^3.3.7",
     "debug": "^4.3.3",
     "express": "^4.17.2",
@@ -27,6 +28,7 @@
     "lodash": "^4.17.21",
     "mongoose": "^6.2.2",
     "morgan": "^1.10.0",
+    "node-pre-gyp": "^0.17.0",
     "pug": "^3.0.2"
   }
 }
