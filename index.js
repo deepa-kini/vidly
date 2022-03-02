@@ -4,12 +4,13 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const config = require('config');
 const logger = require('./middleware/logger');
-const auth = require('./middleware/auth');
+const authMiddleware = require('./middleware/auth');
 const genres = require('./routes/genres');
 const customers = require('./routes/customers');
 const movies = require('./routes/movies');
 const rentals = require('./routes/rentals');
 const users = require('./routes/users');
+const auth = require('./routes/auth');
 const homepage = require('./routes/homepage');
 const Joi = require('joi');
 
@@ -41,7 +42,7 @@ if (app.get('env') === 'development') {
 
 // Custom Middleware functions
 app.use(logger);
-app.use(auth);
+app.use(authMiddleware);
 
 // Establish the routes
 app.use('/api/genres', genres);
@@ -49,6 +50,7 @@ app.use('/api/customers', customers);
 app.use('/api/movies', movies);
 app.use('/api/rentals', rentals);
 app.use('/api/users', users);
+app.use('/api/auth', auth);
 app.use('/', homepage);
 
 
