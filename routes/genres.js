@@ -1,6 +1,7 @@
 const express = require('express');
 const { validate, Genre } = require('../models/genre');
 const auth = require('../middleware/auth');
+const admin = require('../middleware/admin');
 
 const Router = express.Router();
 
@@ -42,7 +43,7 @@ Router.put('/:id', auth, async (req, res) => {
   res.send(genre);
 });
 
-Router.delete('/:id', async (req, res) => {
+Router.delete('/:id', [auth, admin], async (req, res) => {
   const genre = await Genre.findByIdAndRemove(req.params.id);
   if (!genre) return res.status(404).send("The genre does not exist!");
 
