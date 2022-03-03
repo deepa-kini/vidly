@@ -28,7 +28,7 @@ Router.post('/', auth, async (req, res) => {
   res.send(genre);
 });
 
-Router.put('/:id', async (req, res) => {
+Router.put('/:id', auth, async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 

@@ -1,4 +1,5 @@
 const express = require('express');
+const auth = require('../middleware/auth');
 const { validate, Movie } = require('../models/movie');
 const { Genre } = require('../models/genre');
 
@@ -16,7 +17,7 @@ Router.get('/:id', async (req, res) => {
   res.send(movie);
 });
 
-Router.post('/', async (req, res) => {
+Router.post('/', auth, async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -37,7 +38,7 @@ Router.post('/', async (req, res) => {
   res.send(movie);
 });
 
-Router.put('/:id', async (req, res) => {
+Router.put('/:id', auth, async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
   const genre = await Genre.findById(req.body.genreId);
@@ -59,7 +60,7 @@ Router.put('/:id', async (req, res) => {
   res.send(movie);
 });
 
-Router.delete('/:id', async (req, res) => {
+Router.delete('/:id', auth, async (req, res) => {
   const movie = await Movie.findByIdAndRemove(req.params.id);
   if (!movie) return res.status(404).send("The movie does not exist!");
 
