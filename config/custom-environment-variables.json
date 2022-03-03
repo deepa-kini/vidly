@@ -4,5 +4,8 @@
   },
   "database": {
     "password": "db_pwd"
+  },
+  "jwt": {
+    "jwtPrivateKey": "vidly_jwt_key"
   }
 }

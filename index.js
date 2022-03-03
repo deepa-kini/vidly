@@ -19,8 +19,13 @@ Joi.objectId = require('joi-objectid')(Joi);
 const port = process.env.PORT || 3000;
 const app = express();
 
-const password = config.get('database.password');
-const dbConnect = `mongodb+srv://root:${password}@playground.mryia.mongodb.net/vidly?retryWrites=true&w=majority`;
+const dbPassword = config.get('database.password');
+if (!config.get('jwt.jwtPrivateKey') || !dbPassword) {
+  console.error('Environment variables are not defined');
+  process.exit(1);
+}
+
+const dbConnect = `mongodb+srv://root:${dbPassword}@playground.mryia.mongodb.net/vidly?retryWrites=true&w=majority`;
 mongoose.connect(dbConnect)
   .then(() => console.log('Connected to MongoDB...'))
   .catch(err => console.log('error', err.message));

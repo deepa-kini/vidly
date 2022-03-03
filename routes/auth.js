@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const config = require('config');
 const express = require('express');
 const bcrypt = require('bcrypt');
 const _ = require('lodash');
@@ -22,7 +23,8 @@ Router.post('/', async (req, res) => {
     _id: user._id
   };
 
-  const token = jwt.sign(payload, 'jwtPrivateKey');
+  const jwtPrivateKet = config.get('jwt.jwtPrivateKey');
+  const token = jwt.sign(payload, jwtPrivateKet);
   res.send(token);
 
 });
