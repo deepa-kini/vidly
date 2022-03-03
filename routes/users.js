@@ -1,4 +1,6 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
+const config = require('config');
 const bcrypt = require('bcrypt');
 const _ = require('lodash');
 const { validate, User } = require('../models/user');
@@ -19,7 +21,14 @@ Router.post('/', async (req, res) => {
 
   await user.save();
 
-  res.send(_.pick(user, ['_id', 'name', 'email']));
+  const payload = {
+    _id: user._id
+  };
+
+  const jwtPrivateKet = config.get('jwt.jwtPrivateKey');
+  const token = jwt.sign(payload, jwtPrivateKet);
+
+  res.header('x-auth-token', token).send(_.pick(user, ['_id', 'name', 'email']));
 
 });
 
