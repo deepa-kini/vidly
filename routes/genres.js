@@ -1,5 +1,6 @@
 const express = require('express');
 const { validate, Genre } = require('../models/genre');
+const auth = require('../middleware/auth');
 
 const Router = express.Router();
 
@@ -15,7 +16,7 @@ Router.get('/:id', async (req, res) => {
   res.send(genre);
 });
 
-Router.post('/', async (req, res) => {
+Router.post('/', auth, async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 

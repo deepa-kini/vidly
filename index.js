@@ -4,7 +4,6 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const config = require('config');
 const logger = require('./middleware/logger');
-const authMiddleware = require('./middleware/auth');
 const genres = require('./routes/genres');
 const customers = require('./routes/customers');
 const movies = require('./routes/movies');
@@ -47,7 +46,6 @@ if (app.get('env') === 'development') {
 
 // Custom Middleware functions
 app.use(logger);
-app.use(authMiddleware);
 
 // Establish the routes
 app.use('/api/genres', genres);
