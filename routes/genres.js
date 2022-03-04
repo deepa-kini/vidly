@@ -2,6 +2,7 @@ const express = require('express');
 const { validate, Genre } = require('../models/genre');
 const auth = require('../middleware/auth');
 const admin = require('../middleware/admin');
+const asyncMiddleware = require('../middleware/async');
 
 const Router = express.Router();
 
@@ -11,15 +12,11 @@ Router.get('/', async (req, res) => {
   res.send(genres);
 });
 
-Router.get('/:id', async (req, res, next) => {
-  try {
+Router.get('/:id', asyncMiddleware(async (req, res, next) => {
     const genre = await Genre.findById(req.params.id);
     if (!genre) return res.status(404).send("The genre does not exist!");
     res.send(genre);
-  } catch (ex) {
-    next();
-  }
-});
+}));
 
 Router.post('/', auth, async (req, res) => {
   const { error } = validate(req.body);
