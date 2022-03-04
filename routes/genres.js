@@ -11,13 +11,13 @@ Router.get('/', async (req, res) => {
   res.send(genres);
 });
 
-Router.get('/:id', async (req, res) => {
+Router.get('/:id', async (req, res, next) => {
   try {
     const genre = await Genre.findById(req.params.id);
     if (!genre) return res.status(404).send("The genre does not exist!");
     res.send(genre);
   } catch (ex) {
-    res.status(500).send('Something failed');
+    next();
   }
 });
 
