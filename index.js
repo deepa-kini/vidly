@@ -22,6 +22,11 @@ Joi.objectId = require('joi-objectid')(Joi);
 const port = process.env.PORT || 3000;
 const app = express();
 
+process.on('uncaughtException', (ex) => {
+  console.log('We got an uncaught exception!');
+  winston.error(ex.message, ex)
+})
+throw new Error("startup failed");
 const dbPassword = config.get('database.password');
 if (!config.get('jwt.jwtPrivateKey') || !dbPassword) {
   console.error('Environment variables are not defined');
