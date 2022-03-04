@@ -1,6 +1,7 @@
 require('express-async-errors');
 const express = require('express');
 const helmet = require('helmet');
+const winston = require('winston');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const config = require('config');
@@ -19,6 +20,8 @@ Joi.objectId = require('joi-objectid')(Joi);
 
 const port = process.env.PORT || 3000;
 const app = express();
+
+winston.add(new winston.transports.File({ filename: 'logfile.log' }));
 
 const dbPassword = config.get('database.password');
 if (!config.get('jwt.jwtPrivateKey') || !dbPassword) {
