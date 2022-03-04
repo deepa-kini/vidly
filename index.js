@@ -22,15 +22,17 @@ Joi.objectId = require('joi-objectid')(Joi);
 const port = process.env.PORT || 3000;
 const app = express();
 
-process.on('uncaughtException', (ex) => {
-  console.log('We got an uncaught exception!');
-  winston.error(ex.message, ex)
-})
+// process.on('uncaughtException', (ex) => {
+//   console.log('We got an uncaught exception!');
+//   winston.error(ex.message, ex);
+//   process.exit(1);
+// })
 
-process.on('unhandledRejection', (ex) => {
-  console.log('We got an unhandled rejection!');
-  winston.error(ex.message, ex)
-})
+// process.on('unhandledRejection', (ex) => {
+//   console.log('We got an unhandled rejection!');
+//   winston.error(ex.message, ex);
+//   process.exit(1);
+// })
 
 const p = Promise.reject(new Error('Failed'));
 p.then(() => console.log('Done'));
@@ -46,7 +48,7 @@ mongoose.connect(dbConnect)
   .then(() => console.log('Connected to MongoDB...'))
   .catch(err => console.log('error', err.message));
 
-winston.add(new winston.transports.File({ filename: 'logfile.log' }));
+winston.add(new winston.transports.File({ filename: 'logfile.log', handleExceptions: true }));
 winston.add(new winston.transports.MongoDB({ db: dbConnect, level: 'error' }))
 
 app.set('view engine', 'pug');
