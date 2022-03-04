@@ -26,7 +26,15 @@ process.on('uncaughtException', (ex) => {
   console.log('We got an uncaught exception!');
   winston.error(ex.message, ex)
 })
-throw new Error("startup failed");
+
+process.on('unhandledRejection', (ex) => {
+  console.log('We got an unhandled rejection!');
+  winston.error(ex.message, ex)
+})
+
+const p = Promise.reject(new Error('Failed'));
+p.then(() => console.log('Done'));
+
 const dbPassword = config.get('database.password');
 if (!config.get('jwt.jwtPrivateKey') || !dbPassword) {
   console.error('Environment variables are not defined');
